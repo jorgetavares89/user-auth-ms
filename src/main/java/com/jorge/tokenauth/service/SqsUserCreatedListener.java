@@ -1,5 +1,6 @@
 package com.jorge.tokenauth.service;
 
+import com.amazonaws.services.sqs.model.Message;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.jorge.tokenauth.model.factory.UserAuthenticatorFactory;

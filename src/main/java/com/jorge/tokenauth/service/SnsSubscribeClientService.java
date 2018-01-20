@@ -1,20 +1,16 @@
 package com.jorge.tokenauth.service;
 
-import com.amazonaws.protocol.Protocol;
-import com.amazonaws.services.sns.model.SubscribeRequest;
-import com.amazonaws.services.sns.model.SubscribeResult;
-import com.amazonaws.services.sqs.AmazonSQSAsync;
-import com.jorge.tokenauth.config.SnsSubscriber;
 import com.jorge.tokenauth.exception.BadRequestException;
 import com.jorge.tokenauth.exception.NotFoundException;
+import com.jorge.tokenauth.model.request.SubscribeRequest;
+import com.jorge.tokenauth.model.result.SubscribeResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import java.net.URI;
 
 @Service
 public class SnsSubscribeClientService {
@@ -30,25 +26,42 @@ public class SnsSubscribeClientService {
     }
 
     public SubscribeResult subscribe() {
-        final String subUrl = "http://user-token-auth-ms:8080/sub";
-        HttpEntity<SubscribeRequest> request = new HttpEntity<>(createRequest("sqs", userCreatedQueueUrl));
-        ResponseEntity<SubscribeResult> response = restTemplate
-                .exchange(subUrl, HttpMethod.POST, request, SubscribeResult.class);
+        final String userRegisterEndpoint = "http://user-register-ms:8080";
+        final String subPath = "/sub";
+        final URI uri = createUri(userRegisterEndpoint, subPath);
+        final String subRequest = new SubscribeRequest(userCreatedQueueUrl, "sqs").toJson();
+        HttpEntity<String> entity = new HttpEntity<>(subRequest, createHeader());
+        ResponseEntity<String> response = restTemplate
+                .exchange(uri, HttpMethod.POST, entity, String.class);
         return handleResponse(response);
     }
 
-    private SubscribeResult handleResponse(final ResponseEntity<SubscribeResult> resultResponseEntity) {
+    private SubscribeResult handleResponse(final ResponseEntity<String> resultResponseEntity) {
         if (resultResponseEntity.getStatusCode().equals(HttpStatus.OK)) {
-            return resultResponseEntity.getBody();
+            return new SubscribeResult().fromJson(resultResponseEntity.getBody());
         } else if (resultResponseEntity.getStatusCode().equals(HttpStatus.NOT_FOUND)) {
             throw new NotFoundException("not found");
         } else {
             throw new BadRequestException("bad request");
         }
     }
-    private SubscribeRequest createRequest(String protocol, String endpoint) {
-        return new SubscribeRequest()
+    private com.amazonaws.services.sns.model.SubscribeRequest createRequest(String protocol, String endpoint) {
+        return new com.amazonaws.services.sns.model.SubscribeRequest()
                 .withProtocol(protocol)
                 .withEndpoint(endpoint);
+    }
+
+    private URI createUri(String endpoint, String path) {
+       return UriComponentsBuilder.fromUriString(endpoint)
+                .path(path)
+                .build()
+                .encode()
+                .toUri();
+    }
+
+    private HttpHeaders createHeader() {
+        HttpHeaders header = new HttpHeaders();
+        header.set("Content-Type", "application/json");
+        return header;
     }
 }

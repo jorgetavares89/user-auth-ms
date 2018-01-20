@@ -1,6 +1,6 @@
 package com.jorge.tokenauth.config;
 
-import com.amazonaws.services.sns.model.SubscribeResult;
+import com.jorge.tokenauth.model.result.SubscribeResult;
 import com.jorge.tokenauth.service.SnsSubscribeClientService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +25,7 @@ public class SnsSubscriber implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-//        final SubscribeResult result = snsSubscribeClientService.subscribe();
-//        LOG.info("Subscription arn: "+result.getSubscriptionArn());
+        final SubscribeResult result = snsSubscribeClientService.subscribe();
+        LOG.info("Subscription arn: "+result.getSubscriptionArn());
     }
 }
