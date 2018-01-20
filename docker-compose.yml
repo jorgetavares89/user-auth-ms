@@ -36,6 +36,6 @@ services:
     environment:
       - SERVICES=sqs:4576
       - DOCKER_HOST=unix:///var/run/docker.sock
-       - HOSTNAME_EXTERNAL=aws-local-slack
+      - HOSTNAME_EXTERNAL=aws-local-slack
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"

@@ -53,8 +53,6 @@ public class SqsConfigLocal extends AwsGeneralConfigLocal {
     public SimpleMessageListenerContainerFactory simpleMessageListenerContainerFactory(AmazonSQSAsync amazonSqs) {
         SimpleMessageListenerContainerFactory factory = new SimpleMessageListenerContainerFactory();
         factory.setAmazonSqs(amazonSqs);
-        factory.setAutoStartup(false);
-        factory.setMaxNumberOfMessages(5);
         return factory;
     }
 }

@@ -1,5 +1,7 @@
 package com.jorge.tokenauth.model.result;
 
+import com.google.gson.Gson;
+
 import java.util.Objects;
 
 public class UserCreatedEvent {
@@ -28,6 +30,10 @@ public class UserCreatedEvent {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public UserCreatedEvent fromJson(String json) {
+        return new Gson().fromJson(json, UserCreatedEvent.class);
     }
 
     @Override

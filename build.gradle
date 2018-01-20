@@ -99,6 +99,7 @@ docker {
     }
 }
 
+
 task buildDockerImage(type: DockerBuildImage) {
 	dependsOn createDockerfile
     tag = "${jar.baseName}:${project.version}"
