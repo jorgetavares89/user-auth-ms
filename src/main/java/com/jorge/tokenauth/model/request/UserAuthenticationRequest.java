@@ -1,7 +1,5 @@
 package com.jorge.tokenauth.model.request;
 
-import com.jorge.tokenauth.model.entity.UserAuthentication;
-
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -10,6 +8,7 @@ import java.util.Objects;
 public class UserAuthenticationRequest {
 
     private Long id;
+    private Long userId;
     private String token;
 
     public UserAuthenticationRequest() {}
@@ -24,6 +23,14 @@ public class UserAuthenticationRequest {
         this.id = id;
     }
 
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
     public String getToken() {
         return token;
     }
@@ -36,8 +43,14 @@ public class UserAuthenticationRequest {
 
         private UserAuthenticationRequest userAuthentication = new UserAuthenticationRequest();
 
-        public Builder withId(Long groupId) {
-            this.userAuthentication.setId(groupId);
+        public Builder withId(Long id) {
+            this.userAuthentication.setId(id);
+            return this;
+        }
+
+
+        public Builder withUserId(Long userId) {
+            this.userAuthentication.setId(userId);
             return this;
         }
 

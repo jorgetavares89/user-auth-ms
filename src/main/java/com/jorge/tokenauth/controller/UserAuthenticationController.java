@@ -25,8 +25,8 @@ public class UserAuthenticationController {
     @GetMapping("/{id}/token/{token}")
     public HttpEntity<UserAuthenticationResource> validation(@PathVariable Long id,
                                                              @PathVariable String token) {
-        final String result = service.validation(id, token);
-        final Link link = linkTo(UserAuthenticationController.class).slash(result).withSelfRel();
+        service.validation(id, token);
+        final Link link = linkTo(UserAuthenticationController.class).slash("home").withRel("home");
         final UserAuthenticationResource resource = new UserAuthenticationResource(link);
         return ResponseEntity
                 .status(HttpStatus.CREATED)

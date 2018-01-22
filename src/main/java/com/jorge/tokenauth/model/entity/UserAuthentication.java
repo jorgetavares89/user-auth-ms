@@ -8,6 +8,7 @@ import java.util.Objects;
 public class UserAuthentication {
 	
     private Long id;
+    private Long userId;
     private String token;
 
     public UserAuthentication() {}
@@ -22,6 +23,14 @@ public class UserAuthentication {
         this.id = id;
     }
 
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
     public String getToken() {
         return token;
     }
@@ -34,10 +43,16 @@ public class UserAuthentication {
 
         private UserAuthentication userAuthentication = new UserAuthentication();
 
-        public Builder withId(Long groupId) {
-            this.userAuthentication.setId(groupId);
+        public Builder withId(Long id) {
+            this.userAuthentication.setId(id);
             return this;
         }
+
+        public Builder withUserId(Long userId) {
+            this.userAuthentication.setUserId(userId);
+            return this;
+        }
+
 
         public Builder withToken(String token) {
             this.userAuthentication.setToken(token);

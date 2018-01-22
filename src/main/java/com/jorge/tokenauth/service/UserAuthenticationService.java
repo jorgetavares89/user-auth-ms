@@ -2,6 +2,7 @@ package com.jorge.tokenauth.service;
 
 import com.google.common.collect.Lists;
 import com.jorge.tokenauth.exception.NotFoundException;
+import com.jorge.tokenauth.exception.UnauthorizedException;
 import com.jorge.tokenauth.model.entity.UserAuthentication;
 import com.jorge.tokenauth.model.factory.UserAuthenticatorFactory;
 import com.jorge.tokenauth.model.request.UserAuthenticationRequest;
@@ -25,7 +26,8 @@ public class UserAuthenticationService {
     }
 
     public String validation(Long userId, String token) {
-        return null;
+        return repository.findByUserIdAndToken(userId, token)
+                .orElseThrow(() -> new UnauthorizedException("Fail to authentication")).getToken();
     }
 
     public UserAuthentication save(UserAuthenticationRequest userAuthenticationRequest) {
