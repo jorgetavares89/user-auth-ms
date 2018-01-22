@@ -1,4 +1,4 @@
-# User Token Authentication Java Microservice
+# User Authentication Java Microservice
 
 The User register microservice, a `Spring Boot` with a `Maria-DB` database responsible create a new `User` register and returns the self link using `Spring HATEOS`
 
