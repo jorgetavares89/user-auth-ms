@@ -22,7 +22,7 @@ To run this application in local environment we need to :
 
 ## Clone this repository
 
-`$ git clone https://jorge_tavares@bitbucket.org/jorge_tavares/payment-methods-ms.git`
+`$ git clone https://github.com/jorgetavares89/user-token-auth-ms.git`
 
 ## Build Docker image
 
