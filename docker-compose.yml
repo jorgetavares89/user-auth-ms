@@ -1,31 +1,31 @@
 version: '2'
 services:
-  user-register-ms:
-    image: user-token-auth-ms:0.0.1
-    container_name: user-token-auth-ms
+  user-auth-ms:
+    image: user-auth-ms:0.0.1
+    container_name: user-auth-ms
     ports:
       - "8080:8080"
       - "7000:7000"
     depends_on:
-      - user-token-auth-db
+      - user-auth-db
       - localstack
     environment:
       - ENV=dev-local
       - SQS_ENDPOINT=http://aws-local-slack:4576
       - SQS_CREATED_QUEUE_NAME=user-created-queue
-      - DB_URL=jdbc:mariadb://user-token-auth-db:3306/user-token-auth
+      - DB_URL=jdbc:mariadb://user-auth-db:3306/user-auth
       - DB_USER=root
       - DB_PASSWORD=root
       - HIBERNATE_DDL_AUTO=create
       - JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=7000
-  user-token-auth-db:
+  user-auth-db:
     image: mariadb:latest
-    container_name: user-token-auth-db
+    container_name: user-auth-db
     volumes:
       - ~/local_db_users_token_auth/:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=user-token-auth
+      - MYSQL_DATABASE=user-auth
     ports:
       - 3306:3306
   localstack:

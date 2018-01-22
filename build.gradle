@@ -60,7 +60,7 @@ dependencies {
 
 }
 
-jar { baseName = 'user-token-auth-ms' }
+jar { baseName = 'user-auth-ms' }
 
 task createDockerfile(type: Dockerfile, dependsOn: build) {
     outputs.upToDateWhen { false }

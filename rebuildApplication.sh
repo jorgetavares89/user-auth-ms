@@ -5,7 +5,7 @@ function _downCompose () {
 }
 function _deleteDockerImage () {
     echo "Deleting last docker image..."
-    docker rmi user-token-auth-ms:0.0.1
+    docker rmi user-auth-ms:0.0.1
 }
 
 function _buildDockerImage () {
